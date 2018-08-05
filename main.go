@@ -128,6 +128,8 @@ func main() {
 	port := os.Getenv("PORT")
 	fmt.Println("Starting chat app..")
 	go manager.start()
+	fs := http.FileServer(http.Dir("build"))
+	http.Handle("/", fs)
 	http.HandleFunc("/chat", chatPage)
 	http.ListenAndServe(":"+port, nil)
 }
