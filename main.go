@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/websocket"
 	uuid "github.com/satori/go.uuid"
@@ -124,8 +125,9 @@ func chatPage(res http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	port := os.Getenv("PORT")
 	fmt.Println("Starting chat app..")
 	go manager.start()
 	http.HandleFunc("/chat", chatPage)
-	http.ListenAndServe(":8085", nil)
+	http.ListenAndServe(":"+port, nil)
 }
